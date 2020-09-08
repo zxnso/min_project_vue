@@ -31,12 +31,18 @@ module.exports = {
   productionSourceMap: false,
   devServer: {
     port: port,
-    open: true,
+    open: false,
     overlay: {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js')
+    proxy: {
+      '/': {
+          target: 'http://127.0.0.1:8888', //API服务器的地址
+          changeOrigin: true, // 虚拟的站点需要更管origin
+      }
+  }
+    //before: require('./mock/mock-server.js')
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

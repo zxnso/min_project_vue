@@ -74,7 +74,7 @@ export const constantRoutes = [
         path: 'rules',
         name: 'Rules',
         component: () => import('@/views/rules/index'),
-        meta: { title: '运营配置', icon: 'table' }
+        meta: { title: '搜索规则', icon: 'table' }
       },
       {
         path: 'preview',

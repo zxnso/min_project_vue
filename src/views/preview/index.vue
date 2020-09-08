@@ -11,7 +11,7 @@
       <div class="hot-list">
         <p>今日热词</p>
         <div class="list">
-          <p v-for="(item, index) in hotList" :key="index">{{ item.name }}</p>
+          <p v-for="(item, index) in hotList" :key="index">{{ item }}</p>
         </div>
       </div>
     </div>
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { search, getHotList } from '@/api/hot'
 export default {
   name: 'Preview',
   components: {},
@@ -26,30 +27,27 @@ export default {
   data() {
     return {
       keyword: '',
-      hotList: [
-        {
-          name: 'hahaha'
-        },
-        {
-          name: 'hahaha'
-        },
-        {
-          name: 'hahaha'
-        },
-        {
-          name: 'hahaha'
-        }
-      ]
+      hotList: []
     }
   },
-  created() {},
+  created() {
+    this.getHotList()
+  },
   mounted() {},
   methods: {
     onSearch(val) {
-      console.log(val)
+      search({ hotWord: val}).then(res => {
+        this.$message.success(res.message)
+        this.getHotList()
+      })
     },
     onCancel() {
       this.keyword = ''
+    },
+    getHotList() {
+      getHotList().then(res => {
+        this.hotList = res.data
+      })
     }
   }
 }
